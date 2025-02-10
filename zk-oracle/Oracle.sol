@@ -52,5 +52,18 @@ contract InsuranceOracle is Ownable, ReentrancyGuard {
         uint256 riskScore
     ) external nonReentrant {
         require(driverHistory[msg.sender].length > 0, "no data submitted");
+
+        require(verifier.verifyProof(a, b, c, input), "Invalid Proof");
+
+        uint256 lastIndex = driverHistory[msg.sender].lenth - 1;
+        driverHistory[msg.sender][lastIndex].isVerified = true;
+        driverHistory[msg.sender][lastIndex].riskScore = riskScore;
+
+        emit ProofVerified(msg.sender, riskScore);
+    }
+
+    function getLatestRiskScore(address driver) external view returns (uint256) {
+        require(driverHistory[driver].length > 0, "No data available");
+        return driverHistory[driver][driverHistory[driver].length - 1].riskScore;
     }
 }
