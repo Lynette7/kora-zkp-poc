@@ -76,4 +76,63 @@ class TelematicsProofSystem {
 
         return Math.max(0, Math.min(100, riskScore));
     }
+
+    async submitToBlockchain(reading, proof) {
+        try {
+            const dataHash = ethers.utils.keccak256(
+                ethers.utils.defaultAbiCoder.encode(
+                    ['uint256', 'uint256[2]', 'uint256'],
+                    [reading.speed, reading.location, reading.timestamp]
+                )
+            );
+
+            await this.contract.submitData(dataHash);
+
+            const riskScore = this.calculateRiskScore(reading);
+
+            await this.contract.verifyDataProof(
+                proof.a,
+                proof.b,
+                proof.c,
+                proof.input,
+                riskScore
+            );
+
+            return true;
+        } catch (error) {
+            console.error('Error submitting to the blockchain:', error);
+            throw error;
+        }
+    }
+
+    async processBatch(csvFilePath) {
+        try {
+            const readings = await this.processTelematics(csvFilePath);
+            console.log(`Processing ${readings.length} readings...`);
+
+            for (const reading of readings) {
+                const proof = await this.generateProof(reading);
+                console.log('Proof generated for reading at timestamp:', reading.timestamp);
+
+                await this.submitToBlockchain(reading, proof);
+                console.log('Data and proof submitted to blockchain');
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error in batch processing:', error);
+            throw error;
+        }
+    }
 }
+
+async function main() {
+    const system = new TelematicsProofSystem(
+        'CONTRACT_ADDRESS',
+        'PROVIDER_URL'
+    );
+
+    await system.processBatch('./telematics.csv');
+}
+
+main().catch(console.error);
