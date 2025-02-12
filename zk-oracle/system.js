@@ -64,4 +64,16 @@ class TelematicsProofSystem {
             throw error;
         }
     }
+
+    calculateRiskScore(reading) {
+        let riskScore = 100;
+
+        if (reading.speed > 120) {
+            riskScore -= 20;
+        } else if (reading.speed > 100) {
+            riskScore -= 10;
+        }
+
+        return Math.max(0, Math.min(100, riskScore));
+    }
 }
