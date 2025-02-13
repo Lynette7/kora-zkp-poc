@@ -26,7 +26,7 @@ class TelematicsProofSystem {
                             parseFloat(row.latitude),
                             parseFloat(row.longitude)
                         ],
-                        speed: parseFloat(row.speed)
+                        speed: parseFloat(row.speed_kmh)
                     });
                 })
                 .on('end', () => {
