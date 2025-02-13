@@ -22,11 +22,11 @@ class TelematicsProofSystem {
                 .on('data', (row) => {
                     readings.push({
                         timestamp: parseInt(row.timestamp),
-                        speed: parseFloat(row.speed),
                         location: [
                             parseFloat(row.latitude),
                             parseFloat(row.longitude)
-                        ]
+                        ],
+                        speed: parseFloat(row.speed)
                     });
                 })
                 .on('end', () => {
