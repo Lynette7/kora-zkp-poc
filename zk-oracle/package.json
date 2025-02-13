@@ -9,5 +9,15 @@
     "chai": "^5.1.2",
     "ethereum-waffle": "^4.0.10",
     "ethers": "^5.7.2"
-  }
+  },
+  "name": "zk-oracle",
+  "version": "1.0.0",
+  "main": "system.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
