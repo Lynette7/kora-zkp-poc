@@ -55,7 +55,7 @@ contract InsuranceOracle is Ownable, ReentrancyGuard {
 
         require(verifier.verifyProof(a, b, c, input), "Invalid Proof");
 
-        uint256 lastIndex = driverHistory[msg.sender].lenth - 1;
+        uint256 lastIndex = driverHistory[msg.sender].length - 1;
         driverHistory[msg.sender][lastIndex].isVerified = true;
         driverHistory[msg.sender][lastIndex].riskScore = riskScore;
 
