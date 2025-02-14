@@ -13,7 +13,7 @@ interface IZKVerifier {
     ) external view returns (bool);
 }
 
-contract InsuranceOracle is Ownable, ReentrancyGuard {
+contract InsuranceOracle is Ownable(msg.sender), ReentrancyGuard {
     IZKVerifier public verifier;
 
     struct DriverData {
