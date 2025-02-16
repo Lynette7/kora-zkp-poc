@@ -1,15 +1,17 @@
 async function main() {
     // First, deploy the verifier
-    const ZKVerifier = await ethers.getContractFactory("Verifier");
+    const ZKVerifier = await ethers.getContractFactory("Groth16Verifier");
     const verifier = await ZKVerifier.deploy();
-    await verifier.deployed();
-    console.log("ZKVerifier deployed to:", verifier.address);
+    await verifier.waitForDeployment();
+    const verifierAddress = await verifier.getAddress();
+    console.log("ZKVerifier deployed to:", verifierAddress);
   
     // Then deploy the insurance oracle with the verifier address
     const InsuranceOracle = await ethers.getContractFactory("InsuranceOracle");
-    const insuranceOracle = await InsuranceOracle.deploy(verifier.address);
-    await insuranceOracle.deployed();
-    console.log("InsuranceOracle deployed to:", insuranceOracle.address);
+    const insuranceOracle = await InsuranceOracle.deploy(verifier.getAddress());
+    await insuranceOracle.waitForDeployment();
+    const oracleAddress = await insuranceOracle.getAddress();
+    console.log("InsuranceOracle deployed to:", oracleAddress);
   }
   
   main()

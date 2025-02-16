@@ -14,6 +14,7 @@ template DrivingDataVerifier() {
     component isSpeedValid = LessThan(32);
     isSpeedValid.in[0] <== speed;
     isSpeedValid.in[1] <== speedLimit;
+    signal speedIsValid <== isSpeedValid.out;
 
     component hasher = Poseidon(4);
     hasher.inputs[0] <== speed;
@@ -24,4 +25,4 @@ template DrivingDataVerifier() {
     publicDataHash === hasher.out;
 }
 
-component main = DrivingDataVerifier();
+component main {public [publicDataHash]} = DrivingDataVerifier();
