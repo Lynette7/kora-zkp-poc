@@ -1,0 +1,6 @@
+1,1,0,main.isBelowThreshold
+2,2,0,main.avgSpeed
+3,3,0,main.threshold
+4,4,0,main.diff
+5,5,0,main.diffShifted
+6,6,0,main.diffPositivePart
