@@ -10,5 +10,4 @@ fs.createReadStream('./telematics.csv')
   .on('end', () => {
     const avgSpeed = speeds.reduce((a, b) => a + b, 0) / speeds.length;
     console.log(`Average Speed (over ${speeds.length} rows): ${avgSpeed.toFixed(2)} km/h`);
-    // For your sample: 206.0, 122.0, ... (5,777 total)
   });

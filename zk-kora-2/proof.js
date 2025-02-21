@@ -2,8 +2,8 @@ const snarkjs = require('snarkjs');
 
 async function generateProof(avgSpeed) {
     const input = {
-        avgSpeed: avgSpeed * 100, // Scale by 100, e.g., 130.45 → 13045
-        threshold: 120 * 100      // 120 → 12000
+        avgSpeed: avgSpeed * 100,
+        threshold: 120 * 100
     };
     const { proof, publicSignals } = await snarkjs.plonk.fullProve(
         input,
@@ -11,10 +11,10 @@ async function generateProof(avgSpeed) {
         'circuit_final.zkey'
     );
     console.log("Proof:", proof);
-    console.log("Public Signals:", publicSignals); // [1] if avg <= 120, [0] otherwise
+    console.log("Public Signals:", publicSignals);
     return { proof, publicSignals };
 }
 
 module.exports = { generateProof };
 
-generateProof(110.59); // Replace with your actual average
+generateProof(110.59);
